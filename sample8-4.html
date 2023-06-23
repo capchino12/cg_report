@@ -6,7 +6,7 @@
   </head>
 <body>
  <h1>作品</h1>
- あるアニメを参考に1場面を作成。画像の切り抜きができなかったため配布された資料を活用して作成した。<br>
+ あるアニメを参考に1場面を作成。画像の切り抜きができなかったため配布された資料を活用して作成した。木を中心から動かさない事で異物感をアピールしている<br>
  <script>
       // ページの読み込みを待つ
       window.addEventListener('DOMContentLoaded', init);
@@ -28,9 +28,9 @@
         const scene = new THREE.Scene();
 
         // カメラを作成
-        const camera = new THREE.PerspectiveCamera(50, width / height);
+        const camera = new THREE.PerspectiveCamera(45, width / height);
         // カメラの初期座標を設定
-        camera.position.set(0, -1, 5);
+        camera.position.set(0, -3, 5);
 
         // カメラコントローラーを作成
         const controls = new THREE.OrbitControls(camera, document.body); 
@@ -48,12 +48,12 @@
 
         
 
-        // 木をスプライトで作成
+        // ☆をスプライトで作成
         var textureLoader = new THREE.TextureLoader();  
         var texture = textureLoader.load("star.png");
         const material = new THREE.SpriteMaterial({ map: texture,});
 
-        // 森を作成
+        // ☆を作成
         for (let i = 0; i < 20; i++) {
           const sprite = new THREE.Sprite(material);
           // ランダムな座標に配置
