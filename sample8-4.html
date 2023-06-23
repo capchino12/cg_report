@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <h1>森を作成</h1>
+ ループで２０本の気を作った<br>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
+
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
+
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+        // 背景の色を設定
+        renderer.setClearColor(0x00bfff);
+
+
+
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(50, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, -1, 5);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff);
+        directionalLight1.position.set(10, 10, 10);
+        // シーンに追加
+        scene.add(directionalLight1);
+        // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        directionalLight2.position.set(-10, -10, 10);
+        // シーンに追加
+        scene.add(directionalLight2);
+
+        
+
+        // 木をスプライトで作成
+        var textureLoader = new THREE.TextureLoader();  
+        var texture = textureLoader.load("img/star.png");
+        const material = new THREE.SpriteMaterial({ map: texture,});
+
+        // 森を作成
+        for (let i = 0; i < 20; i++) {
+          const sprite = new THREE.Sprite(material);
+          // ランダムな座標に配置
+          sprite.position.x = 2 * (Math.random() - 0.5);
+          sprite.position.y = 0.5 * Math.random();
+          sprite.position.z = 2 * (Math.random() - 0.5);
+          // スケールを調整
+          sprite.scale.set(0.5, 0.5, 0.5);
+
+          scene.add(sprite);
+        }
+
+        // 木をスプライトで作成
+        var texture1 = textureLoader.load("img/tree2.png");
+        const material1 = new THREE.SpriteMaterial({ map: texture1,});
+
+         const sprite1 = new THREE.Sprite(material1);
+        sprite1.position.x = 0;
+        sprite1.position.y = 0;
+        sprite1.position.z = 0;
+        sprite1.scale.set(2,2,2);
+        scene.add(sprite1);
+        
+         // テクスチャー読み込み
+        var texture3 = textureLoader.load("stone.jpg");
+        var mat = new THREE.MeshPhongMaterial();
+        mat.map = texture3;
+
+        // 球を作成
+        var geometry2 = new THREE.SphereGeometry(0.5, 32, 32 ); ;
+        var Sphere = new THREE.Mesh(geometry2, mat);
+        Sphere.position.set(2,2,0);
+        scene.add(Sphere);
+
+
+
+        
+        
+
+     
+        
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+
+          // 玉を回転させる
+          Sphere.rotation.x += 0.01;
+          Sphere.rotation.y += 0.01;
+        }
+      }
+    </script>
+</body>
